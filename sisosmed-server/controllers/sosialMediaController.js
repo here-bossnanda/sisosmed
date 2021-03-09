@@ -1,9 +1,17 @@
 const { SosialMedia } = require('../models');
+const { Op } = require('sequelize')
 
 class sosialMediaController {
   static async getAll(req, res, next) {
     try {
-      const dataSosialMedia = await SosialMedia.find();
+      const { pendiri } = req.query;
+      let condition = pendiri ? {
+        pendiri: {
+          [Op.like]: `%${pendiri}%`
+        }
+      } : null;
+
+      const dataSosialMedia = await SosialMedia.findAll({ where: condition });
 
       return res.status(200).json(dataSosialMedia)
     } catch (error) {
@@ -14,8 +22,9 @@ class sosialMediaController {
   static async getOne(req, res, next) {
     try {
       const { id } = req.params;
+      if (!Number(id)) return next({ name: 'notFound' });
 
-      const oneSosialMedia = await SosialMedia.findById(id);
+      const oneSosialMedia = await SosialMedia.findByPk(id);
       if (!oneSosialMedia) return next({ name: 'notFound' });
 
       return res.status(200).json(oneSosialMedia);
@@ -40,10 +49,12 @@ class sosialMediaController {
   static async update(req, res, next) {
     try {
       const { id } = req.params;
+      if (!Number(id)) return next({ name: 'notFound' });
+
       const { nama_aplikasi, keterangan, jumlah_pengguna, pendiri, tanggal_didirikan } = req.body;
       const input = { nama_aplikasi, keterangan, jumlah_pengguna, pendiri, tanggal_didirikan };
 
-      const findSocialMedia = await SosialMedia.findById(id);
+      const findSocialMedia = await SosialMedia.findByPk(id);
       if (!findSocialMedia) return next({ name: 'notFound' });
 
       await findSocialMedia.update(input, { where: { id } });
@@ -58,7 +69,9 @@ class sosialMediaController {
   static async destroy(req, res, next) {
     try {
       const { id } = req.params;
-      const findSocialMedia = await SosialMedia.findById(id);
+      if (!Number(id)) return next({ name: 'notFound' });
+
+      const findSocialMedia = await SosialMedia.findByPk(id);
       if (!findSocialMedia) return next({ name: 'notFound' });
 
       await findSocialMedia.destroy();
