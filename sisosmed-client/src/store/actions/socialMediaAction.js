@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = 'http://localhost:3000/api/aplikasi';
+const baseUrl = 'https://sisosmed.herokuapp.com/api/aplikasi';
 
 export const startFetchSocialMedia = () => {
   return {
@@ -47,9 +47,12 @@ export const fetchOneSocialMedia = (id) => {
 }
 
 export const storeSocialMedia = (payload) => {
-  return async () => {
+  return async (dispatch, getState) => {
     try {
-      await axios.post(baseUrl, payload)
+      const { data } = await axios.post(baseUrl, payload);
+      const { socialMedia:sm } = getState();
+      const newData = [...sm.socialMedia, data];
+      dispatch(dispatchSocialMedia(newData));
     } catch (error) {
       console.log(error);
     }
@@ -57,9 +60,14 @@ export const storeSocialMedia = (payload) => {
 }
 
 export const updateSocialMedia = (payload, id) => {
-  return async () => {
+  return async (dispatch, getState) => {
     try {
-      await axios.put(`${baseUrl}/${id}`, payload);
+      const { data } = await axios.put(`${baseUrl}/${id}`, payload);
+      const { socialMedia:sm } = getState();
+      const filteredSocialMedia = sm.socialMedia.filter(app => app.id != id);
+      const newData = filteredSocialMedia.concat(data);
+
+      dispatch(dispatchSocialMedia(newData));
     } catch (error) {
       console.log(error);
     }

@@ -62,7 +62,7 @@ export default function Form(props) {
         </div>
         <div className="mb-3">
           <label htmlFor="tanggal_didirikan" className="form-label">Tanggal Didirikan</label>
-          <input type="text" className="form-control" required value={inputSocialMedia.tanggal_didirikan} onChange={(e) => handleChange(e)} name="tanggal_didirikan" id="tanggal_didirikan" placeholder="tanggal_didirikan" />
+          <input type="text" className="form-control" required value={inputSocialMedia.tanggal_didirikan} onChange={(e) => handleChange(e)} name="tanggal_didirikan" id="tanggal_didirikan" placeholder="tanggal didirikan" />
         </div>
         <button className="btn btn-success" type="submit">Submit</button>
       </form>

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function TableSocialMedia(props) {
-  const { getAllSocialMedia, handleDelete, handleEdit,isSearching } = props;
+  const { getAllSocialMedia, handleDelete, handleEdit,isSearching, isLoading } = props;
   return (
     <div className="table-responsive">
         <table className="table table-striped table-bordered">
@@ -17,9 +17,13 @@ export default function TableSocialMedia(props) {
             </tr>
           </thead>
           <tbody>
-
             {
-            (isSearching) ? <tr>
+            (isLoading) ? 
+            <tr>
+              <td colSpan="7" className="text-center">wait a minute...</td>
+            </tr>:
+            (isSearching) ? 
+            <tr>
               <td colSpan="7" className="text-center">Searching...</td>
             </tr> :
             (getAllSocialMedia.length === 0) ? 

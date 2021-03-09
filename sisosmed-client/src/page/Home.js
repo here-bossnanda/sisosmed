@@ -9,7 +9,7 @@ import Navbar from '../components/Navbar';
 import useDebounce from '../hooks/useDebounce';
 
 export default function Home() {
-  const { socialMedia } = useSelector(state => state.socialMedia);
+  const { socialMedia, isLoading } = useSelector(state => state.socialMedia);
   const [getAllSocialMedia, setAllSocialMedia] = useState([]);
   const [getSearch, setSearch] = useState('');
   const [isSearching, setIsSearching] = useState(false);
@@ -64,6 +64,8 @@ export default function Home() {
     setIsSearching(true);
     setSearch(e.target.value);
   }
+
+  
   return (
     <>
     <Navbar />
@@ -77,7 +79,7 @@ export default function Home() {
           <button  className="btn btn-primary mb-3">Add Social Media</button>
         </Link>
         <input type="text" value={getSearch} onChange={(e) => handleSearch(e)}  name="search" id="search" className="form-control" placeholder="Search by founder..."/>
-        <TableSocialMedia isSearching={isSearching} getAllSocialMedia={getAllSocialMedia} handleDelete={handleDelete} handleEdit={handleEdit} />
+        <TableSocialMedia isLoading={isLoading} isSearching={isSearching} getAllSocialMedia={getAllSocialMedia} handleDelete={handleDelete} handleEdit={handleEdit} />
       </div>
     </div>
     </div>
