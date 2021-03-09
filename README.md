@@ -1,10 +1,10 @@
 # sisosmed
 mini project information social media.
 techstack =>
-server: express
-client: react js, redux
-database: postgres
-deployment: heroku and firebase
+1. server: express
+2. client: react js, redux
+3. database: postgres
+4. deployment: heroku and firebase
 
 # to run server
 1. npm i
